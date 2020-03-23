@@ -13,4 +13,7 @@ public class Vector {
 	double dot_product(Vector other) {
 		return 0;
 	}
+	public double module() {
+		return this.x*this.x + this.y*this.y;
+	}
 }

@@ -13,6 +13,17 @@ public class Board {
 	double up;
 	double down;
 	
+	double temperature() {
+		int i = 0;
+		double ret = 0;
+		for(Particle p : particles) {
+			double module = p.velocity.module();
+			ret += 0.5*p.mass*module*module;
+			i++;
+		}
+		return ret/i;
+	}
+	
 	boolean end() {
 		double r = big_particle.radius;
 		return big_particle.position.x - r <= left || big_particle.position.x + r >= right || big_particle.position.y + r >= up || big_particle.position.y - r <= down;
