@@ -11,7 +11,7 @@ public class Vector {
 		// TODO Auto-generated constructor stub
 	}
 	double dot_product(Vector other) {
-		return 0;
+		return this.x*other.x + this.y*other.y;
 	}
 	public double module() {
 		return this.x*this.x + this.y*this.y;
