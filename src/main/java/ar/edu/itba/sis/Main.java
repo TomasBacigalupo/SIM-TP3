@@ -1,13 +1,10 @@
 package ar.edu.itba.sis;
 
 import ar.edu.itba.sis.model.Board;
-import ar.edu.itba.sis.model.Particle;
-import ar.edu.itba.sis.model.ParticleGenerator;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Properties;
 
 public class Main
