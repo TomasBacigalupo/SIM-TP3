@@ -1,4 +1,5 @@
-package ar.edu.itba.sis;
+package ar.edu.itba.sis.model;
+
 
 import java.util.List;
 
@@ -13,23 +14,23 @@ public class Board {
 	double up;
 	double down;
 	
-	double temperature() {
+	public double temperature() {
 		int i = 0;
 		double ret = 0;
-		for(Particle p : particles) {
-			double module = p.velocity.module();
-			ret += 0.5*p.mass*module*module;
+		for(Particle particle : particles) {
+			double module = particle.getVelocity().module();
+			ret += 0.5*particle.getMass()*module*module;
 			i++;
 		}
 		return ret/i;
 	}
 	
-	boolean end() {
-		double r = big_particle.radius;
-		return big_particle.position.x - r <= left || big_particle.position.x + r >= right || big_particle.position.y + r >= up || big_particle.position.y - r <= down;
+	public boolean end() {
+		double r = big_particle.getRadius();
+		return big_particle.getPosition().x - r <= left || big_particle.getPosition().x + r >= right || big_particle.getPosition().y + r >= up || big_particle.getPosition().y - r <= down;
 	}
 	
-	double tc() {
+	public double tc() {
 		double min = 0;
 		double aux = 0;
 		for (Particle p : particles) {
@@ -52,10 +53,10 @@ public class Board {
 	}
 	
 	@SuppressWarnings("null")
-	void update(double tc) {
-		for (Particle p : particles) {
-			p.position.x = p.position.x + p.velocity.x*tc;
-			p.position.y = p.position.y + p.velocity.y*tc;
+	public void update(double tc) {
+		for (Particle particle : particles) {
+			particle.getPosition().x = particle.getPosition().x + particle.getVelocity().x*tc;
+			particle.getPosition().y = particle.getPosition().y + particle.getVelocity().y*tc;
 		}
 		for(Particle p : particles) {
 			for(Particle q : particles) {
@@ -66,17 +67,17 @@ public class Board {
 					matches.add(r);
 				}
 			}
-			if(p.position.x == left || p.position.x == right) {
+			if(p.getPosition().x == left || p.getPosition().x == right) {
 				p.vertical_collision();
 			}
-			if(p.position.y == up || p.position.y == down) {
+			if(p.getPosition().y == up || p.getPosition().y == down) {
 				p.horizontal_collision();
 			}
 		}
 		
 	}
 	
-	void collision() {
+	public void collision() {
 		for(Particle[] pair : matches) {
 			pair[0].collision(pair[1]);
 		}

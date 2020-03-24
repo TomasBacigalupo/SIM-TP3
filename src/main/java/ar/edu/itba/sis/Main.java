@@ -1,5 +1,8 @@
 package ar.edu.itba.sis;
 
+import ar.edu.itba.sis.model.Board;
+import ar.edu.itba.sis.model.Particle;
+import ar.edu.itba.sis.model.ParticleGenerator;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,11 +17,11 @@ public class Main
 
         int N = 0;
 
-        InputStream input = new FileInputStream("src/config.properties");
+        InputStream input = new FileInputStream("src/resources/config.properties");
         Properties prop = new Properties();
         prop.load(input);
         N = new Integer(prop.getProperty("sim.N"));
-        L = new Double(prop.getProperty("dim.L"));
+        L = new Double(prop.getProperty("sim.L"));
 
         System.out.println( "(L="+L+", "+"N="+N+")");    		
         /*
@@ -40,6 +43,15 @@ public class Main
         double T = 0;
         @SuppressWarnings("unused")
         List<Particle> particles = sg.generate(N,T);
+        StringBuilder sb = new StringBuilder();
+        sb.append(particles.size());
+        sb.append("\n");
+        sb.append("comment");
+        sb.append("\n");
+        for (Particle particle : particles){
+            sb.append(particle.toOvito());
+            sb.append("\n");
+        }
 
         while(!board.end()) {
             double tc = board.tc();

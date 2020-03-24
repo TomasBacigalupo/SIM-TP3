@@ -1,4 +1,4 @@
-package ar.edu.itba.sis;
+package ar.edu.itba.sis.model;
 
 public class Vector {
 	double x;

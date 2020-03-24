@@ -1,13 +1,13 @@
-package ar.edu.itba.sis;
+package ar.edu.itba.sis.model;
 
 public class Particle {
-	int id;
-	Vector position;
-	Vector velocity;
-	double radius;
-	double mass;
+	private int id;
+	private Vector position;
+	private Vector velocity;
+	private double radius;
+	private double mass;
 	
-	public Particle(int id , Vector position , Vector velocity , double radius , double mass) {
+	public Particle(int id, Vector position, Vector velocity, double radius, double mass) {
 		this.id = id;
 		this.position = position;
 		this.velocity = velocity;
@@ -15,14 +15,15 @@ public class Particle {
 		this.mass = mass;
 	}
 	
-	boolean overlaps(Particle other) {
+	public boolean overlaps(Particle other) {
 		double dx = this.position.x - other.position.x;
 		double dy = this.position.y - other.position.y;
 		double dr = this.radius - other.radius;
 		return dx*dx + dy*dy > dr*dr ;
 	}
 	
-	double tc (Particle other) {
+	public double tc (Particle other) {
+
 		double dx = other.position.x - this.position.x;
 		double dy = other.position.y - this.position.y;
 		Vector dr = new Vector(dx,dy);
@@ -45,7 +46,7 @@ public class Particle {
 		}
 	}
 	
-	double tc_vertical_wall (double right , double left) {
+	public double tc_vertical_wall (double right , double left) {
 		double x = 0;
 		if(this.velocity.x > 0) {
 			x = (left - radius - position.x) / this.velocity.x;
@@ -56,7 +57,7 @@ public class Particle {
 		return x;
 	}
 	
-	double tc_horizontal_wall(double up , double down) {
+	public double tc_horizontal_wall(double up , double down) {
 		double y = 0;
 		if(this.velocity.y > 0) {
 			y = (up - radius - position.x) / this.velocity.y;
@@ -67,7 +68,7 @@ public class Particle {
 		return y;
 	}
 	
-	void collision(Particle other) {
+	public void collision(Particle other) {
 		double sigma = this.radius + other.radius;
 		double dx = other.position.x - this.position.x;
 		double dy = other.position.y - this.position.y;
@@ -88,11 +89,64 @@ public class Particle {
 		
 	}
 	
-	void vertical_collision() {
+	public void vertical_collision() {
 		this.velocity.x = -1 * this.velocity.x;
 	}
 	
-	void horizontal_collision() {
+	public void horizontal_collision() {
 		this.velocity.y = -1 * this.velocity.y;
 	}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Vector getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector position) {
+        this.position = position;
+    }
+
+    public Vector getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(Vector velocity) {
+        this.velocity = velocity;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public double getMass() {
+        return mass;
+    }
+
+    public void setMass(double mass) {
+        this.mass = mass;
+    }
+
+
+    public String toOvito(){
+	    StringBuilder sb = new StringBuilder();
+        sb.append(this.id);
+        sb.append(" ");
+        sb.append(this.position.x);
+        sb.append(" ");
+        sb.append(this.position.y);
+        return sb.toString();
+    }
+
+
 }
