@@ -6,8 +6,16 @@ public class Particle {
 	private Vector velocity;
 	private double radius;
 	private double mass;
-	
-	public Particle(int id, Vector position, Vector velocity, double radius, double mass) {
+
+    public Particle(int id, Vector position) {
+        this.id = id;
+        this.position = position;
+        this.mass = 0;
+        this.velocity = new Vector(0,0);
+        this.radius = 0;
+    }
+
+    public Particle(int id, Vector position, Vector velocity, double radius, double mass) {
 		this.id = id;
 		this.position = position;
 		this.velocity = velocity;
@@ -145,6 +153,8 @@ public class Particle {
         sb.append(this.position.x);
         sb.append(" ");
         sb.append(this.position.y);
+        sb.append(" ");
+        sb.append(this.radius);
         return sb.toString();
     }
 

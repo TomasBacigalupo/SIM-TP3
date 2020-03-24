@@ -4,6 +4,7 @@ import ar.edu.itba.sis.model.Board;
 import ar.edu.itba.sis.model.Particle;
 import ar.edu.itba.sis.model.ParticleGenerator;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -37,27 +38,16 @@ public class Main
         La partícula grande debe tener velocidad inicial v2 = 0 y su posición inicial en x2=L/2, y2=L/2.
 
         */
-        Board board = new Board();
-        ParticleGenerator sg = new ParticleGenerator();
-        //int N = 0;
-        double T = 0;
-        @SuppressWarnings("unused")
-        List<Particle> particles = sg.generate(N,T);
-        StringBuilder sb = new StringBuilder();
-        sb.append(particles.size());
-        sb.append("\n");
-        sb.append("comment");
-        sb.append("\n");
-        for (Particle particle : particles){
-            sb.append(particle.toOvito());
-            sb.append("\n");
-        }
+        Board board = new Board(L,N);
 
-        while(!board.end()) {
-            double tc = board.tc();
-            board.update(tc);
-            board.collision();
-        }
+
+        FileWriter fw = new FileWriter("prueba2.txt");
+        String ovito = board.toOvito();
+
+        fw.write(ovito);
+        fw.close();
+
+
     }
 
 }
