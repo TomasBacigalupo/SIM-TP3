@@ -36,11 +36,17 @@ public class Board {
         this.R2 = R2;
         this.M2 = M2;
         this.V = V;
+        matches = new ArrayList<Particle[]>();
+        left = 0;
+        right = L;
+        up = L;
+        down = 0;
         double t;
         do {
         	particles = generateRandomParticles();
         	t = this.temperature();
         }while(!(Tmin < t && t < Tmax));
+        
     }
 
     public List <Particle> generateRandomParticles(){
@@ -49,33 +55,32 @@ public class Board {
         particles.add(new Particle(0,new Vector(L/2,L/2),new Vector(0,0),R2,M2));
         big_particle = particles.get(0);
         for(int i = 1 ; i < N ; i++) {
-        	
-            boolean overlaps = false;
-        	
-            double x = 0;
+        	double x = 0;
             double y = 0;
-            
-            while(!overlaps) {
+            boolean overlaps = false;
+            do {
         		x =  rand.nextDouble()*L;
         		y =  rand.nextDouble()*L;
-        		for(Particle p : particles) {
-            		if(p.overlaps(new Particle(i,new Position(x,y),null,R2,0))){
-            			overlaps = true;
-            		}
-        		}
-            }
-            
+            }while(overlaps(new Particle(0,new Vector(x,y),null,R1,0) , particles ));
             double vx = rand.nextDouble()*V;
             double vy = rand.nextDouble()*V;
-            
-            //Falta chequear que la Temperatura sea igual a T
-            
             particles.add(new Particle(i,new Vector(x,y),new Vector(vx,vy),R1,M1));
         }
         return particles;
     }
 
-    public double temperature() {
+    private boolean overlaps(Particle other,List<Particle> l) {
+		for(Particle p : l) {
+			//System.out.println(String.format("Comparing %d" ,p.getId()));
+			if(p.overlaps(other)) {
+				return true;
+			}
+			//System.out.println("END");
+		}
+		return false;
+	}
+
+	public double temperature() {
 		int i = 0;
 		double acum = 0;
 		for(Particle particle : particles) {
@@ -86,6 +91,20 @@ public class Board {
 		return acum/i;
 	}
 	
+    public boolean hasOverlapping() {
+    	int n = particles.size();
+    	for(int i = 0 ; i < n ; i++) {
+    		for(int j = 0 ; j < n ; j++) {
+    			if(particles.get(i).overlaps(particles.get(j))) {
+    				//System.out.println(String.format("%d overlaps %s",i,j));
+    				return true;
+    			}
+    		}
+    	}
+    	return false;
+    	
+    }
+    
 	public boolean end() {
 		double r = big_particle.getRadius();
 		return big_particle.getPosition().x - r <= left || big_particle.getPosition().x + r >= right || big_particle.getPosition().y + r >= up || big_particle.getPosition().y - r <= down;
@@ -113,7 +132,6 @@ public class Board {
 		return min;
 	}
 	
-	@SuppressWarnings("null")
 	public void update(double tc) {
 		for (Particle particle : particles) {
 			particle.getPosition().x = particle.getPosition().x + particle.getVelocity().x*tc;
@@ -122,7 +140,7 @@ public class Board {
 		for(Particle p : particles) {
 			for(Particle q : particles) {
 				if(p.equals(q)){
-					Particle [] r = null;
+					Particle [] r = new Particle[2];
 					r[0] = p;
 					r[1] = q;
 					matches.add(r);
@@ -143,6 +161,10 @@ public class Board {
 			pair[0].collision(pair[1]);
 		}
 		
+	}
+	
+	public Vector getBigParticle() {
+		return particles.get(0).getPosition();
 	}
 	
 	public String printParticles() {

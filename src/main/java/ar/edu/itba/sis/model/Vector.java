@@ -10,16 +10,17 @@ public class Vector {
 	public Vector() {
 		// TODO Auto-generated constructor stub
 	}
-	double dot_product(Vector other) {
+	public double dot_product(Vector other) {
 		return this.x*other.x + this.y*other.y;
 	}
 	public double module() {
-		return this.x*this.x + this.y*this.y;
+		return Math.sqrt(this.x*this.x + this.y*this.y);
 	}
-	
 	@Override
 	public String toString() {
 		return String.format("(%.2f %.2f)",x,y);
 	}
 	
 }
+
+
