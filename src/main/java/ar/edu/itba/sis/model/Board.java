@@ -47,6 +47,7 @@ public class Board {
         Random rand = new Random();
         List<Particle> particles = new ArrayList<>(N+1);
         particles.add(new Particle(0,new Vector(L/2,L/2),new Vector(0,0),R2,M2));
+        big_particle = particles.get(0);
         for(int i = 1 ; i < N ; i++) {
         	
             boolean overlaps = false;

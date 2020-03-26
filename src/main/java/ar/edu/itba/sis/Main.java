@@ -44,11 +44,11 @@ public class Main
         
         StringBuilder simulacion = new StringBuilder();
         
-        //while(!board.end()){
-        //    board.update(board.tc());
-        //    board.collision();
-        //    simulacion.append(board.toOvito());
-        //}
+        while(!board.end()){
+            board.update(board.tc());
+            board.collision();
+            simulacion.append(board.toOvito());
+        }
 
         //FileWriter fw = new FileWriter("ovito.txt");
         //fw.write(board.toOvito());
