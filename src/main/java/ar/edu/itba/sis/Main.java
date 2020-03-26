@@ -66,6 +66,8 @@ public class Main{
         FileWriter fw = new FileWriter("ovito.txt");
         fw.write(board.toOvito());
         fw.close();
+
+        System.out.println(board.tc());
         
         
     }

@@ -130,18 +130,22 @@ public class Board {
 		double min = this.particles.get(0).tc(this.particles.get(1));
 		double aux;
 		for (Particle p : particles) {
+
+		    //check with other particles
 			for(Particle q : particles) {
 				aux = p.tc(q);
-				if(min > aux) {
+				if(aux < min) {
 					min = aux;
 				}
 			}
+
+			//check with walls
 			aux = p.tc_vertical_wall(left,right);
-			if(min > aux) {
+			if(aux < min) {
 				min = aux;
 			}
 			aux = p.tc_horizontal_wall(up,down);
-			if(min > aux) {
+			if(aux < min) {
 				min = aux;
 			}
 		}
