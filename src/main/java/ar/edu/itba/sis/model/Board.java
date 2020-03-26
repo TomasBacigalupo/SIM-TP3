@@ -61,7 +61,7 @@ public class Board {
             do {
         		x =  rand.nextDouble()*L;
         		y =  rand.nextDouble()*L;
-            }while(overlaps(new Particle(0,new Vector(x,y),null,R1,0) , particles ));
+            }while(overlaps(new Particle(0,new Vector(x,y),null,R1,0) , particles ) || !inside(new Particle(0,new Vector(x,y),null,R1,0)));
             double vx = rand.nextDouble()*V;
             double vy = rand.nextDouble()*V;
             particles.add(new Particle(i,new Vector(x,y),new Vector(vx,vy),R1,M1));
@@ -105,9 +105,26 @@ public class Board {
     	
     }
     
+    public boolean allInside() {
+    	int n = particles.size();
+    	for(int i = 0 ; i < n ; i++) {
+    		if(!inside(particles.get(i))) {
+    			return false;
+    		}
+    	}
+    	return true;
+	}
+    
 	public boolean end() {
 		double r = big_particle.getRadius();
 		return big_particle.getPosition().x - r <= left || big_particle.getPosition().x + r >= right || big_particle.getPosition().y + r >= up || big_particle.getPosition().y - r <= down;
+	}
+	
+	public boolean inside(Particle p) {
+		double x = p.getPosition().x;
+		double y = p.getPosition().y;
+		double r = p.getRadius();
+		return left < x - r && x + r < right && down < y - r && y + r < up ;
 	}
 	
 	public double tc() {
@@ -203,4 +220,5 @@ public class Board {
 
         return sides.toString();
     }
+    
 }
