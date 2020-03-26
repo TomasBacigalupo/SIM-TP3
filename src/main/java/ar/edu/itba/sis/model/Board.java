@@ -127,8 +127,8 @@ public class Board {
 	}
 	
 	public double tc() {
-		double min = 0;
-		double aux = 0;
+		double min = this.particles.get(0).tc(this.particles.get(1));
+		double aux;
 		for (Particle p : particles) {
 			for(Particle q : particles) {
 				aux = p.tc(q);
