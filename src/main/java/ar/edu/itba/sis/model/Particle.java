@@ -22,6 +22,15 @@ public class Particle {
 		this.radius = radius;
 		this.mass = mass;
 	}
+
+	public boolean overlapsB(Particle other){
+        double dx = this.position.x - other.position.x;
+        double dy = this.position.y - other.position.y;
+        double centerDistance = Math.sqrt( dx*dx + dy*dy);
+        double particleDistance = centerDistance -this.radius -other.radius;
+        return particleDistance < 0;
+
+    }
     
 	public boolean overlaps(Particle other) {
 		double dx = this.position.x - other.position.x;

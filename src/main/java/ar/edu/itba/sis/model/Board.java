@@ -7,24 +7,24 @@ import java.util.Random;
 
 public class Board {
     
-	int N;
-    double L;
-    double Tmin;
-    double Tmax;
-    double R1;
-    double M1;
-    double R2;
-    double M2;
-    double V;
-	
-	List<Particle> particles;
-	List<Particle[]> matches;
-	Particle big_particle;
-	
-	double right;
-	double left;
-	double up;
-	double down;
+	private int N;
+	private double L;
+	private double Tmin;
+	private double Tmax;
+	private double R1;
+	private double M1;
+	private double R2;
+	private double M2;
+	private double V;
+
+	private List<Particle> particles;
+	private List<Particle[]> matches;
+	private Particle big_particle;
+
+	private double right;
+	private double left;
+	private double up;
+	private double down;
 
     public Board(int N,double L,double Tmin , double Tmax,double R1,double M1,double R2,double M2,double V) {
     	this.N = N;
@@ -36,7 +36,7 @@ public class Board {
         this.R2 = R2;
         this.M2 = M2;
         this.V = V;
-        matches = new ArrayList<Particle[]>();
+        matches = new ArrayList<>();
         left = 0;
         right = L;
         up = L;
@@ -49,46 +49,45 @@ public class Board {
         
     }
 
-    public List <Particle> generateRandomParticles(){
+    private List <Particle> generateRandomParticles(){
         Random rand = new Random();
         List<Particle> particles = new ArrayList<>(N+1);
-        particles.add(new Particle(0,new Vector(L/2,L/2),new Vector(0,0),R2,M2));
-        big_particle = particles.get(0);
+        this.big_particle = new Particle(0,new Vector(L/2,L/2),new Vector(0,0),R2,M2);
+        particles.add(this.big_particle);
+
+        double x,y,vx,vy;
         for(int i = 1 ; i < N ; i++) {
-        	double x = 0;
-            double y = 0;
-            boolean overlaps = false;
+            //Check it fits
             do {
         		x =  rand.nextDouble()*L;
         		y =  rand.nextDouble()*L;
             }while(overlaps(new Particle(0,new Vector(x,y),null,R1,0) , particles ) || !inside(new Particle(0,new Vector(x,y),null,R1,0)));
-            double vx = rand.nextDouble()*V;
-            double vy = rand.nextDouble()*V;
+
+            vx = rand.nextDouble()*V;
+            vy = rand.nextDouble()*V;
+
             particles.add(new Particle(i,new Vector(x,y),new Vector(vx,vy),R1,M1));
         }
         return particles;
     }
 
-    private boolean overlaps(Particle other,List<Particle> l) {
-		for(Particle p : l) {
-			//System.out.println(String.format("Comparing %d" ,p.getId()));
-			if(p.overlaps(other)) {
+    private boolean overlaps(Particle other,List<Particle> particles) {
+		for(Particle p : particles) {
+			if(p.overlapsB(other)) {
 				return true;
 			}
-			//System.out.println("END");
 		}
 		return false;
 	}
 
 	public double temperature() {
-		int i = 0;
-		double acum = 0;
-		for(Particle particle : particles) {
-			double module = particle.getVelocity().module();
-			acum += 0.5*particle.getMass()*module*module;
-			i++;
+		double k = 0;
+		double module;
+		for(Particle particle : this.particles) {
+			module = particle.getVelocity().module();
+			k += 0.5*particle.getMass()*module*module;
 		}
-		return acum/i;
+		return k    /this.particles.size();
 	}
 	
     public boolean hasOverlapping() {
