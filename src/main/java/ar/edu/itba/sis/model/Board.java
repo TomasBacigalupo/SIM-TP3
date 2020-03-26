@@ -95,7 +95,7 @@ public class Board {
     	int n = particles.size();
     	for(int i = 0 ; i < n ; i++) {
     		for(int j = 0 ; j < n ; j++) {
-    			if(particles.get(i).overlaps(particles.get(j))) {
+    			if(particles.get(i).overlaps(particles.get(j)) && i!=j) {
     				//System.out.println(String.format("%d overlaps %s",i,j));
     				return true;
     			}
