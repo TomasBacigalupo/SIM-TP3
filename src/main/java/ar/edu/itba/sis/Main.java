@@ -13,6 +13,7 @@ public class Main
 
         double L;
         int N;
+        double tc;
 
         //set variables from config.properties
         InputStream input = new FileInputStream("src/resources/config.properties");
@@ -31,6 +32,14 @@ public class Main
         */
 
         Board board = new Board(L,N);
+        StringBuilder simulacion = new StringBuilder();
+
+        while(!board.end()){
+            board.update(board.tc());
+            board.collision();
+            simulacion.append(board.toOvito());
+        }
+
         FileWriter fw = new FileWriter("ovito.txt");
         fw.write(board.toOvito());
         fw.close();
