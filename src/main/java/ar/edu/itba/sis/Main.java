@@ -41,34 +41,31 @@ public class Main{
 
         Board board = new Board(N,L,Tmin,Tmax,R1,M1,R2,M2,V);
         
-        //System.out.println(board.printParticles());
-        
-        //System.out.println("temperature = " + board.temperature());
-        
         StringBuilder simulacion = new StringBuilder();
+
         double tc;
         
         System.out.println(board.hasOverlapping());
         System.out.println(board.allInside());
         System.out.println(board.temperature());
+        System.out.println(board.tc());
         
         
-        
-        while(!board.end()){
-        	tc = board.tc();
-        	//System.out.println(tc);
-            board.update(tc);
-            board.collision();
-            simulacion.append(board.toOvito());
-            System.out.println(board.getBigParticle());
-            //System.out.println(board.printParticles());
-        }
+//        while(!board.end()){
+//        	tc = board.tc();
+//        	//System.out.println(tc);
+//            board.update(tc);
+//            board.collision();
+//            simulacion.append(board.toOvito());
+//            System.out.println(board.getBigParticle());
+//            //System.out.println(board.printParticles());
+//        }
         
         //System.out.println(board.getBigParticle());
         
-        //FileWriter fw = new FileWriter("ovito.txt");
-        //fw.write(board.toOvito());
-        //fw.close();
+        FileWriter fw = new FileWriter("ovito.txt");
+        fw.write(board.toOvito());
+        fw.close();
         
         
     }
