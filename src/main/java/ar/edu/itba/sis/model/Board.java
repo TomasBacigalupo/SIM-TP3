@@ -6,8 +6,17 @@ import java.util.List;
 import java.util.Random;
 
 public class Board {
-    int N;
-	double L;
+    
+	int N;
+    double L;
+    double Tmin;
+    double Tmax;
+    double R1;
+    double M1;
+    double R2;
+    double M2;
+    double V;
+	
 	List<Particle> particles;
 	List<Particle[]> matches;
 	Particle big_particle;
@@ -17,41 +26,63 @@ public class Board {
 	double up;
 	double down;
 
-    public Board(double L, int N) {
-        this.L = L;
-        this.N = N;
-        //TODO ver lo de la temperatura
-        particles = generateRandomParticles(this.N,0);
+    public Board(int N,double L,double Tmin , double Tmax,double R1,double M1,double R2,double M2,double V) {
+    	this.N = N;
+    	this.L = L;
+        this.Tmin = Tmin;
+        this.Tmax = Tmax;
+        this.R1 = R1;
+        this.M1 = M1;
+        this.R2 = R2;
+        this.M2 = M2;
+        this.V = V;
+        double t;
+        do {
+        	particles = generateRandomParticles();
+        	t = this.temperature();
+        }while(!(Tmin < t && t < Tmax));
     }
 
-    public List <Particle> generateRandomParticles(int N , double T){
+    public List <Particle> generateRandomParticles(){
         Random rand = new Random();
         List<Particle> particles = new ArrayList<>(N+1);
-        for(int i = 0 ; i < N ; i++) {
-            double x =  rand.nextDouble()*L;
-            double y =  rand.nextDouble()*L;
-            //Falta chequear que se NO superpongan
-            double vx = 0;
-            double vy = 0;
-            //double vx = rand.nextDouble()*L;
-            //double vy = rand.nextDouble()*L;
-            //|v| < 0.1 m/s
+        particles.add(new Particle(0,new Vector(L/2,L/2),new Vector(0,0),R2,M2));
+        for(int i = 1 ; i < N ; i++) {
+        	
+            boolean overlaps = false;
+        	
+            double x = 0;
+            double y = 0;
+            
+            while(!overlaps) {
+        		x =  rand.nextDouble()*L;
+        		y =  rand.nextDouble()*L;
+        		for(Particle p : particles) {
+            		if(p.overlaps(new Particle(i,new Position(x,y),null,R2,0))){
+            			overlaps = true;
+            		}
+        		}
+            }
+            
+            double vx = rand.nextDouble()*V;
+            double vy = rand.nextDouble()*V;
+            
             //Falta chequear que la Temperatura sea igual a T
-            particles.add(new Particle(i,new Vector(x,y),new Vector(vx,vy),0.005,0.1));
+            
+            particles.add(new Particle(i,new Vector(x,y),new Vector(vx,vy),R1,M1));
         }
-        particles.add(new Particle(N+1,new Vector(L/2,L/2),new Vector(0,0),0.05,100));
         return particles;
     }
 
     public double temperature() {
 		int i = 0;
-		double ret = 0;
+		double acum = 0;
 		for(Particle particle : particles) {
 			double module = particle.getVelocity().module();
-			ret += 0.5*particle.getMass()*module*module;
+			acum += 0.5*particle.getMass()*module*module;
 			i++;
 		}
-		return ret/i;
+		return acum/i;
 	}
 	
 	public boolean end() {
@@ -112,7 +143,16 @@ public class Board {
 		}
 		
 	}
-
+	
+	public String printParticles() {
+		StringBuilder ret = new StringBuilder();
+		for(Particle p : particles) {
+			ret.append(p.toString());
+			ret.append("\n");
+		}
+		return ret.toString();
+	}
+	
 	public String toOvito(){
         StringBuilder sb = new StringBuilder();
         sb.append(this.particles.size()+4);

@@ -16,4 +16,10 @@ public class Vector {
 	public double module() {
 		return this.x*this.x + this.y*this.y;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("(%.2f %.2f)",x,y);
+	}
+	
 }

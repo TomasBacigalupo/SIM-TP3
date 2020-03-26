@@ -10,39 +10,49 @@ import java.util.Properties;
 public class Main
 {
     public static void main( String[] args ) throws IOException {
-
+        
+    	int N;
         double L;
-        int N;
-        double tc;
+        double Tmin;
+        double Tmax;
+        double R1;
+        double M1;
+        double R2;
+        double M2;
+        double V;
 
         //set variables from config.properties
         InputStream input = new FileInputStream("src/resources/config.properties");
         Properties prop = new Properties();
         prop.load(input);
+        
         N = new Integer(prop.getProperty("sim.N"));
         L = new Double(prop.getProperty("sim.L"));
-
-        /*
-        L = 0.5m
-        N partículas chicas de R1 = 0.005m m1 = 0.1g
-        1 partícula  grande de R2 = 0.05m  m2 = 100g
-        Las posiciones de todas las partículas deben ser al azar con distribución uniforme dentro del dominio.
-        Las partículas pequeñas deben tener velocidades con una distribución uniforme en el rango: |v| < 0.1 m/s.
-        La partícula grande debe tener velocidad inicial v2 = 0 y su posición inicial en x2=L/2, y2=L/2.
-        */
-
-        Board board = new Board(L,N);
+        Tmin = new Double(prop.getProperty("sim.Tmin"));
+        Tmax = new Double(prop.getProperty("sim.Tmax"));
+        R1 = new Double(prop.getProperty("sim.R1"));
+        M1 = new Double(prop.getProperty("sim.M1"));
+        R2 = new Double(prop.getProperty("sim.R2"));
+        M2 = new Double(prop.getProperty("sim.M2"));
+        V = new Double(prop.getProperty("sim.V0MAX"));
+        
+        Board board = new Board(N,L,Tmin,Tmax,R1,M1,R2,M2,V);
+        
+        System.out.println(board.printParticles());
+        
+        System.out.println("temperature = " + board.temperature());
+        
         StringBuilder simulacion = new StringBuilder();
+        
+        //while(!board.end()){
+        //    board.update(board.tc());
+        //    board.collision();
+        //    simulacion.append(board.toOvito());
+        //}
 
-        while(!board.end()){
-            board.update(board.tc());
-            board.collision();
-            simulacion.append(board.toOvito());
-        }
-
-        FileWriter fw = new FileWriter("ovito.txt");
-        fw.write(board.toOvito());
-        fw.close();
+        //FileWriter fw = new FileWriter("ovito.txt");
+        //fw.write(board.toOvito());
+        //fw.close();
 
 
     }

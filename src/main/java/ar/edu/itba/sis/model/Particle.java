@@ -6,7 +6,7 @@ public class Particle {
 	private Vector velocity;
 	private double radius;
 	private double mass;
-
+	
     public Particle(int id, Vector position) {
         this.id = id;
         this.position = position;
@@ -14,7 +14,7 @@ public class Particle {
         this.velocity = new Vector(0,0);
         this.radius = 0;
     }
-
+	
     public Particle(int id, Vector position, Vector velocity, double radius, double mass) {
 		this.id = id;
 		this.position = position;
@@ -22,7 +22,7 @@ public class Particle {
 		this.radius = radius;
 		this.mass = mass;
 	}
-	
+    
 	public boolean overlaps(Particle other) {
 		double dx = this.position.x - other.position.x;
 		double dy = this.position.y - other.position.y;
@@ -145,7 +145,7 @@ public class Particle {
         this.mass = mass;
     }
 
-
+    
     public String toOvito(){
 	    StringBuilder sb = new StringBuilder();
         sb.append(this.id);
@@ -157,6 +157,10 @@ public class Particle {
         sb.append(this.radius);
         return sb.toString();
     }
-
-
+    
+    @Override
+    public String toString() {
+    	return String.format("id=%d position=%s velocity=%s r=%.2f m=%.2f",id,position.toString(),velocity.toString(),radius,mass);
+    }
+    
 }
