@@ -165,17 +165,17 @@ public class Board {
 		}
 		for(Particle p : particles) {
 			for(Particle q : particles) {
-				if(p.equals(q)){
+				if(p.overlaps(q)){
 					Particle [] r = new Particle[2];
 					r[0] = p;
 					r[1] = q;
 					matches.add(r);
 				}
 			}
-			if(p.getPosition().x == left || p.getPosition().x == right) {
+			if(p.getPosition().x - p.getRadius() <= left || p.getPosition().x + p.getRadius() >= right) {
 				p.vertical_collision();
 			}
-			if(p.getPosition().y == up || p.getPosition().y == down) {
+			if(p.getPosition().y + p.getRadius() >= up   || p.getPosition().y - p.getRadius() <= down) {
 				p.horizontal_collision();
 			}
 		}
@@ -197,6 +197,11 @@ public class Board {
 		StringBuilder ret = new StringBuilder();
 		for(Particle p : particles) {
 			ret.append(p.toString());
+			for(Particle q : particles) {
+				if(p.overlaps(q) && p.getId() != q.getId()) {
+					ret.append(" X");
+				}
+			}
 			ret.append("\n");
 		}
 		return ret.toString();

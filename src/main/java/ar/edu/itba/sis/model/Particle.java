@@ -42,25 +42,25 @@ public class Particle {
 	public double tc (Particle other) {
 		//System.out.println(String.format("%d %d",this.id,other.getId()));
 		double dx = other.position.x - this.position.x;
-		//System.out.println("dx"+dx);
+		//System.out.println("dx="+dx);
 		double dy = other.position.y - this.position.y;
-		//System.out.println("dy"+dy);
+		//System.out.println("dy="+dy);
 		Vector dr = new Vector(dx,dy);
 		double dvx = other.velocity.x - this.velocity.x;
-		//System.out.println("dvx"+dvx);
+		//System.out.println("dvx="+dvx);
 		double dvy = other.velocity.y - this.velocity.y;
-		//System.out.println("dvy"+dvy);
+		//System.out.println("dvy="+dvy);
 		Vector dv = new Vector(dvx,dvy);
 		double dr2 = dr.dot_product(dr);
-		//System.out.println("dr2"+dr2);
+		//System.out.println("dr2="+dr2);
 		double dv2 = dv.dot_product(dv);
-		//System.out.println("dv2"+dv2);
+		//System.out.println("dv2="+dv2);
 		double dvdr = dv.dot_product(dr);
-		//System.out.println("dvdr"+dvdr);
+		//System.out.println("dvdr="+dvdr);
 		double sigma = this.radius + other.radius;
-		//System.out.println("sigma"+sigma);
+		//System.out.println("sigma="+sigma);
 		double d = dvdr*dvdr-dv2*(dr2-sigma*sigma);
-		//System.out.println("d"+d);
+		//System.out.println("d="+d);
 		if(dvdr>0) {
 			return Double.MAX_VALUE;
 		}

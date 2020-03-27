@@ -50,11 +50,16 @@ public class Main{
         
         System.out.println(board.printParticles());
         
+        //for(int i = 0 ; i < 5 ; i++) {
+        
         double tc = board.tc();
         System.out.println(tc);
         board.update(tc);
+        board.collision();
         
         System.out.println(board.printParticles());
+        
+        //}
         
         /*
         while(!board.end()){
