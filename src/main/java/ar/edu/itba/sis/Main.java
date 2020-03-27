@@ -34,8 +34,10 @@ public class Main{
         Tmin = new Double(prop.getProperty("sim.Tmin"));
         Tmax = new Double(prop.getProperty("sim.Tmax"));
         R1 = new Double(prop.getProperty("sim.R1"));
+        System.out.println(R1);
         M1 = new Double(prop.getProperty("sim.M1"));
         R2 = new Double(prop.getProperty("sim.R2"));
+        System.out.println(R2);
         M2 = new Double(prop.getProperty("sim.M2"));
         V = new Double(prop.getProperty("sim.V0MAX"));
 

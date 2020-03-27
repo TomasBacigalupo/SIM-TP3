@@ -45,7 +45,7 @@ public class Board {
         do {
         	particles = generateRandomParticles();
         	t = this.temperature();
-        }while(!(Tmin < t && t < Tmax));
+        }while(!(this.Tmin < t && t < this.Tmax));
         
     }
 
@@ -163,8 +163,11 @@ public class Board {
 			particle.getPosition().x = particle.getPosition().x + particle.getVelocity().x*tc;
 			particle.getPosition().y = particle.getPosition().y + particle.getVelocity().y*tc;
 		}
-		for(Particle p : particles) {
-			for(Particle q : particles) {
+		int n = particles.size();
+		for(int i = 0 ; i < n ; i++) {
+			Particle p = particles.get(i);
+			for(int j = i + 1 ; j < n ; j++) {
+				Particle q = particles.get(j);
 				if(p.overlaps(q) && p.getId()!=q.getId()){
 					Particle [] r = new Particle[2];
 					r[0] = p;
@@ -184,7 +187,6 @@ public class Board {
 	
 	public void collision() {
 		for(Particle[] pair : matches) {
-			System.out.println(String.format("COLLISION: %d %d",pair[0].getId(),pair[1].getId()));
 			pair[0].collision(pair[1]);
 		}
 		
