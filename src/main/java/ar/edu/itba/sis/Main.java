@@ -39,16 +39,29 @@ public class Main{
         Board board = new Board(N,L,Tmin,Tmax,R1,M1,R2,M2,V);
         
         StringBuilder simulacion = new StringBuilder();
-        
-        double tc;
+
         simulacion.append(board.toOvito());
+        Animation.WallCrash = 0;
+        Animation.Crash = 0;
+        Animation.time = 0;
+        Animation.colisionTimes.clear();
+        double tc;
         while(!board.end()){
-            board.update(board.tc());
+            tc = board.tc();
+            Animation.colisionTimes.add(tc);
+            Animation.time+= tc;
+            board.update(tc);
             if(board.getLastCrachA()!= -1){
                 board.collision();
+
             }
             simulacion.append(board.toOvito());
         }
+
+        System.out.println(Animation.Crash);
+        System.out.println(Animation.WallCrash);
+        System.out.println(Animation.time);
+
 
         
         FileWriter fw = new FileWriter("ovito.txt");

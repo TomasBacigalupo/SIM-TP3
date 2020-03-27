@@ -1,6 +1,8 @@
 package ar.edu.itba.sis.model;
 
 
+import ar.edu.itba.sis.Animation;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -197,20 +199,13 @@ public class Board {
 		int n = particles.size();
 		for(int i = 0 ; i < n ; i++) {
 			Particle p = particles.get(i);
-//			for(int j = i + 1 ; j < n ; j++) {
-//				Particle q = particles.get(j);
-//				if(p.overlaps(q) && p.getId()!=q.getId()){
-//					Particle [] r = new Particle[2];
-//					r[0] = p;
-//					r[1] = q;
-//					matches.add(r);
-//				}
-//			}
 			if(p.getPosition().x - p.getRadius() <= left || p.getPosition().x + p.getRadius() >= right) {
 				p.vertical_collision();
+                Animation.WallCrash++;
 			}
 			if(p.getPosition().y + p.getRadius() >= up   || p.getPosition().y - p.getRadius() <= down) {
 				p.horizontal_collision();
+                Animation.WallCrash++;
 			}
 		}
 		
@@ -219,6 +214,7 @@ public class Board {
 	public void collision() {
         if(lastCrachA!= -1){
             particles.get(lastCrachA).collision(particles.get(lastCrachB));
+            Animation.Crash ++;
         }
 	}
 	
