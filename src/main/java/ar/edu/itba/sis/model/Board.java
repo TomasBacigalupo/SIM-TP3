@@ -16,6 +16,8 @@ public class Board {
 	private double R2;
 	private double M2;
 	private double V;
+	private int lastCrachA =-1;
+    private int lastCrachB =-1;
 
 	private List<Particle> particles;
 	private List<Particle[]> matches;
@@ -137,17 +139,23 @@ public class Board {
                 aux = this.particles.get(i).tc(this.particles.get(j));
                 if(aux<min){
                     min = aux;
+                    lastCrachA = i;
+                    lastCrachB = j;
                 }
             }
             //check walls
             aux = this.particles.get(i).tc_vertical_wall(this.L, 0);
             if(aux<min){
+                lastCrachA = -1;
+                lastCrachB = -1;
                 min = aux;
             }
 
             aux = this.particles.get(i).tc_horizontal_wall(L,0);
             if(aux<min){
                 min = aux;
+                lastCrachA = -1;
+                lastCrachB = -1;
             }
 
         }
@@ -185,18 +193,19 @@ public class Board {
 			particle.getPosition().x = particle.getPosition().x + particle.getVelocity().x*tc;
 			particle.getPosition().y = particle.getPosition().y + particle.getVelocity().y*tc;
 		}
+
 		int n = particles.size();
 		for(int i = 0 ; i < n ; i++) {
 			Particle p = particles.get(i);
-			for(int j = i + 1 ; j < n ; j++) {
-				Particle q = particles.get(j);
-				if(p.overlaps(q) && p.getId()!=q.getId()){
-					Particle [] r = new Particle[2];
-					r[0] = p;
-					r[1] = q;
-					matches.add(r);
-				}
-			}
+//			for(int j = i + 1 ; j < n ; j++) {
+//				Particle q = particles.get(j);
+//				if(p.overlaps(q) && p.getId()!=q.getId()){
+//					Particle [] r = new Particle[2];
+//					r[0] = p;
+//					r[1] = q;
+//					matches.add(r);
+//				}
+//			}
 			if(p.getPosition().x - p.getRadius() <= left || p.getPosition().x + p.getRadius() >= right) {
 				p.vertical_collision();
 			}
@@ -208,10 +217,13 @@ public class Board {
 	}
 	
 	public void collision() {
-		for(Particle[] pair : matches) {
-			pair[0].collision(pair[1]);
-		}
-		matches.clear();
+        if(lastCrachA!= -1){
+            particles.get(lastCrachA).collision(particles.get(lastCrachB));
+        }
+//		for(Particle[] pair : matches) {
+//			pair[0].collision(pair[1]);
+//		}
+//		matches.clear();
 	}
 	
 	public Vector getBigParticle() {

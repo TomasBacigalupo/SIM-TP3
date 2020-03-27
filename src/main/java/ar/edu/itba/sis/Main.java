@@ -44,8 +44,9 @@ public class Main{
         System.out.println(tc);
         simulacion.append(board.toOvito());
         int i = 0;
-        while(!board.end() && i < 200){
+        while(!board.end()){
         	tc = board.tc();
+        	System.out.println(tc);
             board.update(tc);
             board.collision();
             simulacion.append(board.toOvito());
