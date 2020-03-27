@@ -67,6 +67,15 @@ public class Main{
         FileWriter fw = new FileWriter("ovito.txt");
         fw.write(simulacion.toString());
         fw.close();
+
+        FileWriter fw2 = new FileWriter("dataTc.txt");
+        double tim= 0;
+        for (Double d: Animation.colisionTimes) {
+
+            fw2.write(tim+"\n");
+            tim+=d;
+        }
+        fw.close();
                 
     }
 
