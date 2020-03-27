@@ -59,8 +59,8 @@ public class Board {
         for(int i = 1 ; i < N ; i++) {
             //Check it fits
             do {
-        		x =  rand.nextDouble()*L;
-        		y =  rand.nextDouble()*L;
+        		x =  Math.random()*L;
+        		y =  Math.random()*L;
             }while(overlaps(new Particle(0,new Vector(x,y),null,R1,0) , particles ) || !inside(new Particle(0,new Vector(x,y),null,R1,0)));
 
             vx = rand.nextDouble()*V;
@@ -127,39 +127,61 @@ public class Board {
 	}
 	
 	public double tc() {
-		//double min = this.particles.get(0).tc(this.particles.get(1));
 		double min = Double.MAX_VALUE;
 		double aux;
-		for (Particle p : particles) {
 
-		    //check with other particles
-			for(Particle q : particles) {
-				if(p.getId()!=q.getId()) {
-					aux = p.tc(q);
-					//System.out.println(String.format(">>>>>>>>>>>>>>>>>>>>>>>%d tc %d = %.2f",p.getId(),q.getId(),p.tc(q)));
-					if(aux < min) {
-						min = aux;
-					}
-				}
-			}
+		//TODO puede estar fallando por no recorrer de esta manera
+        for (int i = 0; i < this.particles.size(); i++) {
+            for (int j = i+1 ; j < this.particles.size() ; j++) {
+                //check with other particles
+                aux = this.particles.get(i).tc(this.particles.get(j));
+                if(aux<min){
+                    min = aux;
+                }
+            }
+            //check walls
+            aux = this.particles.get(i).tc_vertical_wall(this.L, 0);
+            if(aux<min){
+                min = aux;
+            }
 
-			//check with walls
-			aux = p.tc_vertical_wall(left,right);
-			//System.out.println(String.format("%d tc vertical wall   = %.2f",p.getId(),aux = p.tc_vertical_wall(left,right)));
-			if(aux < min) {
-				min = aux;
-			}
-			aux = p.tc_horizontal_wall(up,down);
-			//System.out.println(String.format("%d tc horizontal wall = %.2f",p.getId(),aux = p.tc_horizontal_wall(up,down)));
-			if(aux < min) {
-				min = aux;
-			}
-		}
+            aux = this.particles.get(i).tc_horizontal_wall(L,0);
+            if(aux<min){
+                min = aux;
+            }
+
+        }
+//		for (Particle p : particles) {
+//
+//		    //check with other particles
+//			for(Particle q : particles) {
+//				if(p.getId()!=q.getId()) {
+//					aux = p.tc(q);
+//					//System.out.println(String.format(">>>>>>>>>>>>>>>>>>>>>>>%d tc %d = %.2f",p.getId(),q.getId(),p.tc(q)));
+//					if(aux < min) {
+//						min = aux;
+//					}
+//				}
+//			}
+//
+//			//check with walls
+//			aux = p.tc_vertical_wall(left,right);
+//			//System.out.println(String.format("%d tc vertical wall   = %.2f",p.getId(),aux = p.tc_vertical_wall(left,right)));
+//			if(aux < min) {
+//				min = aux;
+//			}
+//			aux = p.tc_horizontal_wall(up,down);
+//			//System.out.println(String.format("%d tc horizontal wall = %.2f",p.getId(),aux = p.tc_horizontal_wall(up,down)));
+//			if(aux < min) {
+//				min = aux;
+//			}
+//		}
 		return min;
 	}
 	
 	public void update(double tc) {
-		for (Particle particle : particles) {
+        matches.clear();
+		for (Particle particle : this.particles) {
 			particle.getPosition().x = particle.getPosition().x + particle.getVelocity().x*tc;
 			particle.getPosition().y = particle.getPosition().y + particle.getVelocity().y*tc;
 		}

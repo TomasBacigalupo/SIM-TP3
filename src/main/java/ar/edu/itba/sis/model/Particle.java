@@ -40,27 +40,35 @@ public class Particle {
 	}
 	
 	public double tc (Particle other) {
-		//System.out.println(String.format("%d %d",this.id,other.getId()));
+
+        //Start dr
 		double dx = other.position.x - this.position.x;
-		//System.out.println("dx="+dx);
 		double dy = other.position.y - this.position.y;
-		//System.out.println("dy="+dy);
 		Vector dr = new Vector(dx,dy);
+
+		//Start dv
 		double dvx = other.velocity.x - this.velocity.x;
-		//System.out.println("dvx="+dvx);
 		double dvy = other.velocity.y - this.velocity.y;
-		//System.out.println("dvy="+dvy);
 		Vector dv = new Vector(dvx,dvy);
-		double dr2 = dr.dot_product(dr);
-		//System.out.println("dr2="+dr2);
-		double dv2 = dv.dot_product(dv);
-		//System.out.println("dv2="+dv2);
-		double dvdr = dv.dot_product(dr);
-		//System.out.println("dvdr="+dvdr);
+
+		//Start dr2
+        double dr2 = Math.pow(dr.x,2) + Math.pow(dr.y,2);
+
+        //start dv2
+        double dv2 = Math.pow(dv.x,2) + Math.pow(dv.y,2);
+
+        //Start dv * dr
+        double dvdr = dv.x*dr.x + dv.y*dr.y;
+
+//		double dr2 = dr.dot_product(dr);
+//		double dv2 = dv.dot_product(dv);
+//      double dvdr = dv.dot_product(dr);
+
+
 		double sigma = this.radius + other.radius;
-		//System.out.println("sigma="+sigma);
-		double d = dvdr*dvdr-dv2*(dr2-sigma*sigma);
-		//System.out.println("d="+d);
+
+		double d = Math.pow(dvdr,2) - dv2 * (dr2-Math.pow(sigma,2));
+
 		if(dvdr>0) {
 			return Double.MAX_VALUE;
 		}
@@ -68,18 +76,20 @@ public class Particle {
 			return Double.MAX_VALUE;
 		}
 		else {
-			return - ( dvdr + Math.sqrt(d) ) / dv2 ;
+			return -(dvdr + Math.sqrt(d))/dv2 ;
 		}
 	}
 	
 	public double tc_vertical_wall (double right , double left) {
 		double x = Double.MAX_VALUE;
 		if(this.velocity.x > 0) {
-			x = (left - radius - position.x) / this.velocity.x;
-		}
-		else if(this.velocity.x < 0) {
 			x = (right - radius - position.x) / this.velocity.x;
+		}else if(this.velocity.x < 0) {
+			x = (left + radius - position.x) / this.velocity.x;
 		}
+		if(x<=0){
+		    return Math.random();
+        }
 		return x;
 	}
 	
@@ -89,8 +99,11 @@ public class Particle {
 			y = (up - radius - position.y) / this.velocity.y;
 		}
 		else if(this.velocity.y < 0) {
-			y = (down - radius - position.y) / this.velocity.y;
+			y = (down + radius - position.y) / this.velocity.y;
 		}
+        if(y<=0){
+            return Math.random();
+        }
 		return y;
 	}
 	

@@ -1,9 +1,6 @@
 package ar.edu.itba.sis;
 
 import ar.edu.itba.sis.model.Board;
-import ar.edu.itba.sis.model.Particle;
-import ar.edu.itba.sis.model.Vector;
-
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -42,40 +39,22 @@ public class Main{
         Board board = new Board(N,L,Tmin,Tmax,R1,M1,R2,M2,V);
         
         StringBuilder simulacion = new StringBuilder();
-
-        
-        //System.out.println(board.hasOverlapping());
-        //System.out.println(board.allInside());
-        //System.out.println(board.temperature());
-        
-        System.out.println(board.printParticles());
-        
-        for(int i = 0 ; i < 10 ; i++) {
         
         double tc = board.tc();
         System.out.println(tc);
-        board.update(tc);
-        board.collision();
-        
-        System.out.println(board.printParticles());
-        
-        }
-        
-        /*
-        while(!board.end()){
+        simulacion.append(board.toOvito());
+        int i = 0;
+        while(!board.end() && i < 200){
         	tc = board.tc();
-        	//System.out.println(tc);
             board.update(tc);
             board.collision();
             simulacion.append(board.toOvito());
-            System.out.println(board.getBigParticle());
-            //System.out.println(board.printParticles());
+            i++;
         }
-         */
-        //System.out.println(board.getBigParticle());
+
         
         FileWriter fw = new FileWriter("ovito.txt");
-        fw.write(board.toOvito());
+        fw.write(simulacion.toString());
         fw.close();
                 
     }
