@@ -189,7 +189,7 @@ public class Board {
 		for(Particle[] pair : matches) {
 			pair[0].collision(pair[1]);
 		}
-		
+		matches.clear();
 	}
 	
 	public Vector getBigParticle() {

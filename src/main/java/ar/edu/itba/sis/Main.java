@@ -34,10 +34,8 @@ public class Main{
         Tmin = new Double(prop.getProperty("sim.Tmin"));
         Tmax = new Double(prop.getProperty("sim.Tmax"));
         R1 = new Double(prop.getProperty("sim.R1"));
-        System.out.println(R1);
         M1 = new Double(prop.getProperty("sim.M1"));
         R2 = new Double(prop.getProperty("sim.R2"));
-        System.out.println(R2);
         M2 = new Double(prop.getProperty("sim.M2"));
         V = new Double(prop.getProperty("sim.V0MAX"));
 
@@ -46,13 +44,13 @@ public class Main{
         StringBuilder simulacion = new StringBuilder();
 
         
-        System.out.println(board.hasOverlapping());
-        System.out.println(board.allInside());
-        System.out.println(board.temperature());
+        //System.out.println(board.hasOverlapping());
+        //System.out.println(board.allInside());
+        //System.out.println(board.temperature());
         
         System.out.println(board.printParticles());
         
-        //for(int i = 0 ; i < 5 ; i++) {
+        for(int i = 0 ; i < 10 ; i++) {
         
         double tc = board.tc();
         System.out.println(tc);
@@ -61,7 +59,7 @@ public class Main{
         
         System.out.println(board.printParticles());
         
-        //}
+        }
         
         /*
         while(!board.end()){
