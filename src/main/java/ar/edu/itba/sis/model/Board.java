@@ -127,24 +127,30 @@ public class Board {
 	}
 	
 	public double tc() {
-		double min = this.particles.get(0).tc(this.particles.get(1));
+		//double min = this.particles.get(0).tc(this.particles.get(1));
+		double min = Double.MAX_VALUE;
 		double aux;
 		for (Particle p : particles) {
 
 		    //check with other particles
 			for(Particle q : particles) {
-				aux = p.tc(q);
-				if(aux < min) {
-					min = aux;
+				if(p.getId()!=q.getId()) {
+					aux = p.tc(q);
+					//System.out.println(String.format(">>>>>>>>>>>>>>>>>>>>>>>%d tc %d = %.2f",p.getId(),q.getId(),p.tc(q)));
+					if(aux < min) {
+						min = aux;
+					}
 				}
 			}
 
 			//check with walls
 			aux = p.tc_vertical_wall(left,right);
+			//System.out.println(String.format("%d tc vertical wall   = %.2f",p.getId(),aux = p.tc_vertical_wall(left,right)));
 			if(aux < min) {
 				min = aux;
 			}
 			aux = p.tc_horizontal_wall(up,down);
+			//System.out.println(String.format("%d tc horizontal wall = %.2f",p.getId(),aux = p.tc_horizontal_wall(up,down)));
 			if(aux < min) {
 				min = aux;
 			}

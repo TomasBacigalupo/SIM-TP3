@@ -43,33 +43,36 @@ public class Main{
         
         StringBuilder simulacion = new StringBuilder();
 
-        double tc;
         
         System.out.println(board.hasOverlapping());
         System.out.println(board.allInside());
         System.out.println(board.temperature());
+        
         System.out.println(board.printParticles());
         
-/*
+        double tc = board.tc();
+        System.out.println(tc);
+        board.update(tc);
+        
+        System.out.println(board.printParticles());
+        
+        /*
         while(!board.end()){
         	tc = board.tc();
-        	System.out.println(tc);
+        	//System.out.println(tc);
             board.update(tc);
             board.collision();
             simulacion.append(board.toOvito());
-            //System.out.println(board.getBigParticle());
+            System.out.println(board.getBigParticle());
             //System.out.println(board.printParticles());
         }
-*/
+         */
         //System.out.println(board.getBigParticle());
         
         FileWriter fw = new FileWriter("ovito.txt");
         fw.write(board.toOvito());
         fw.close();
-
-        System.out.println(board.tc());
-        
-        
+                
     }
 
 }
