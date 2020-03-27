@@ -86,10 +86,10 @@ public class Particle {
 	public double tc_horizontal_wall(double up , double down) {
 		double y = Double.MAX_VALUE;
 		if(this.velocity.y > 0) {
-			y = (up - radius - position.x) / this.velocity.y;
+			y = (up - radius - position.y) / this.velocity.y;
 		}
 		else if(this.velocity.y < 0) {
-			y = (down - radius - position.x) / this.velocity.y;
+			y = (down - radius - position.y) / this.velocity.y;
 		}
 		return y;
 	}

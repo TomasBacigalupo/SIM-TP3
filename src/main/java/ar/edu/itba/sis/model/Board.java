@@ -165,7 +165,7 @@ public class Board {
 		}
 		for(Particle p : particles) {
 			for(Particle q : particles) {
-				if(p.overlaps(q)){
+				if(p.overlaps(q) && p.getId()!=q.getId()){
 					Particle [] r = new Particle[2];
 					r[0] = p;
 					r[1] = q;
@@ -184,6 +184,7 @@ public class Board {
 	
 	public void collision() {
 		for(Particle[] pair : matches) {
+			System.out.println(String.format("COLLISION: %d %d",pair[0].getId(),pair[1].getId()));
 			pair[0].collision(pair[1]);
 		}
 		
