@@ -220,10 +220,6 @@ public class Board {
         if(lastCrachA!= -1){
             particles.get(lastCrachA).collision(particles.get(lastCrachB));
         }
-//		for(Particle[] pair : matches) {
-//			pair[0].collision(pair[1]);
-//		}
-//		matches.clear();
 	}
 	
 	public Vector getBigParticle() {
@@ -271,5 +267,149 @@ public class Board {
 
         return sides.toString();
     }
-    
+
+
+    public int getN() {
+        return N;
+    }
+
+    public void setN(int n) {
+        N = n;
+    }
+
+    public double getL() {
+        return L;
+    }
+
+    public void setL(double l) {
+        L = l;
+    }
+
+    public double getTmin() {
+        return Tmin;
+    }
+
+    public void setTmin(double tmin) {
+        Tmin = tmin;
+    }
+
+    public double getTmax() {
+        return Tmax;
+    }
+
+    public void setTmax(double tmax) {
+        Tmax = tmax;
+    }
+
+    public double getR1() {
+        return R1;
+    }
+
+    public void setR1(double r1) {
+        R1 = r1;
+    }
+
+    public double getM1() {
+        return M1;
+    }
+
+    public void setM1(double m1) {
+        M1 = m1;
+    }
+
+    public double getR2() {
+        return R2;
+    }
+
+    public void setR2(double r2) {
+        R2 = r2;
+    }
+
+    public double getM2() {
+        return M2;
+    }
+
+    public void setM2(double m2) {
+        M2 = m2;
+    }
+
+    public double getV() {
+        return V;
+    }
+
+    public void setV(double v) {
+        V = v;
+    }
+
+    public int getLastCrachA() {
+        return lastCrachA;
+    }
+
+    public void setLastCrachA(int lastCrachA) {
+        this.lastCrachA = lastCrachA;
+    }
+
+    public int getLastCrachB() {
+        return lastCrachB;
+    }
+
+    public void setLastCrachB(int lastCrachB) {
+        this.lastCrachB = lastCrachB;
+    }
+
+    public List<Particle> getParticles() {
+        return particles;
+    }
+
+    public void setParticles(List<Particle> particles) {
+        this.particles = particles;
+    }
+
+    public List<Particle[]> getMatches() {
+        return matches;
+    }
+
+    public void setMatches(List<Particle[]> matches) {
+        this.matches = matches;
+    }
+
+    public Particle getBig_particle() {
+        return big_particle;
+    }
+
+    public void setBig_particle(Particle big_particle) {
+        this.big_particle = big_particle;
+    }
+
+    public double getRight() {
+        return right;
+    }
+
+    public void setRight(double right) {
+        this.right = right;
+    }
+
+    public double getLeft() {
+        return left;
+    }
+
+    public void setLeft(double left) {
+        this.left = left;
+    }
+
+    public double getUp() {
+        return up;
+    }
+
+    public void setUp(double up) {
+        this.up = up;
+    }
+
+    public double getDown() {
+        return down;
+    }
+
+    public void setDown(double down) {
+        this.down = down;
+    }
 }

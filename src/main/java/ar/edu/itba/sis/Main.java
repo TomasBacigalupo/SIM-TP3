@@ -40,17 +40,14 @@ public class Main{
         
         StringBuilder simulacion = new StringBuilder();
         
-        double tc = board.tc();
-        System.out.println(tc);
+        double tc;
         simulacion.append(board.toOvito());
-        int i = 0;
         while(!board.end()){
-        	tc = board.tc();
-        	System.out.println(tc);
-            board.update(tc);
-            board.collision();
+            board.update(board.tc());
+            if(board.getLastCrachA()!= -1){
+                board.collision();
+            }
             simulacion.append(board.toOvito());
-            i++;
         }
 
         

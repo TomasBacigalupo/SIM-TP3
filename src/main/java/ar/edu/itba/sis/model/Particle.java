@@ -108,27 +108,17 @@ public class Particle {
 	}
 	
 	public void collision(Particle other) {
-		//System.out.println(String.format("COLLISION BETWEEN: %d and %d",id,other.id));
 		double sigma = this.radius + other.radius;
-		//System.out.println("sigma="+sigma);
 		double dx = other.position.x - this.position.x;
-		//System.out.println("dx="+dx);
 		double dy = other.position.y - this.position.y;
-		//System.out.println("dy="+dy);
 		Vector dr = new Vector(dx,dy);
 		double dvx = other.velocity.x - this.velocity.x;
-		//System.out.println("dvx="+dvx);
 		double dvy = other.velocity.y - this.velocity.y;
-		//System.out.println("dvy="+dvy);
 		Vector dv = new Vector(dvx,dvy);
 		double dvdr = dv.dot_product(dr);
-		//System.out.println("dvdr="+dvdr);
 		double J = (2*this.mass*other.mass*dvdr)/(sigma*(this.mass + other.mass));
-		//System.out.println("J="+J);
 		double Jx = J*dx/sigma;
-		//System.out.println("Jx="+Jx);
 		double Jy = J*dy/sigma;
-		//System.out.println("Jy="+Jy);
 		
 		this.velocity.x = this.velocity.x + Jx/this.mass;
 		this.velocity.y = this.velocity.y + Jy/this.mass;
