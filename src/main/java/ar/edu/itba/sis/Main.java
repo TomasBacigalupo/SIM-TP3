@@ -37,7 +37,18 @@ public class Main{
         V = new Double(prop.getProperty("sim.V0MAX"));
 
         Board board = new Board(N,L,Tmin,Tmax,R1,M1,R2,M2,V);
-        
+        for (int i = 1; i < 5; i++) {
+            completeSimulation(new Board(20*i,L,Tmin,Tmax,R1,M1,R2,M2,V),""+20*i);
+        }
+
+
+
+
+
+                
+    }
+
+    public static void completeSimulation(Board board,String path) throws IOException{
         StringBuilder simulacion = new StringBuilder();
 
         simulacion.append(board.toOvito());
@@ -63,20 +74,27 @@ public class Main{
         System.out.println(Animation.time);
 
 
-        
-        FileWriter fw = new FileWriter("ovito.txt");
+
+        FileWriter fw = new FileWriter("ovito"+path+".txt");
         fw.write(simulacion.toString());
         fw.close();
 
-        FileWriter fw2 = new FileWriter("dataTc.txt");
+        FileWriter fw2 = new FileWriter("dataTCAcum"+path+".txt");
         double tim= 0;
         for (Double d: Animation.colisionTimes) {
 
             fw2.write(tim+"\n");
             tim+=d;
         }
-        fw.close();
-                
+        fw2.close();
+
+
+        FileWriter fw3 = new FileWriter("dataTC"+path+".txt");
+        for (Double d: Animation.colisionTimes) {
+
+            fw3.write(d+"\n");
+        }
+        fw3.close();
     }
 
 }
