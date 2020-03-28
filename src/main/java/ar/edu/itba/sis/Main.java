@@ -1,10 +1,8 @@
 package ar.edu.itba.sis;
 
 import ar.edu.itba.sis.model.Board;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
+
+import java.io.*;
 import java.util.Properties;
 
 public class Main{
@@ -64,12 +62,16 @@ public class Main{
         Animation.Crash = 0;
         Animation.time = 0;
         Animation.colisionTimes.clear();
+        Animation.modules.clear();
         double tc;
         double time_elapsed = 0;
         int steps = 0;
+
         while(!board.end()){
             tc = board.tc();
             time_elapsed += tc;
+            Animation.modules.add(board.velocity());
+
             v_modules.append("t=" + time_elapsed);
             v_modules.append("\n");
             v_modules.append(board.get_modules());
@@ -116,6 +118,16 @@ public class Main{
         fw4.write(time_elapsed+"\n");
         fw4.write(v_modules+"\n");
         fw4.close();
+
+        FileWriter fw5 = new FileWriter("|v|"+path+".txt");
+        double times = 0;
+        for (int i = 0; i <Animation.colisionTimes.size() ; i++) {
+            times += Animation.colisionTimes.get(i);
+            if(times > tim*2/3){
+                fw5.write(Animation.modules.get(i)+ " "+ times+ "\n");
+            }
+
+        }
         
     }
 

@@ -7,4 +7,5 @@ public class Animation {
     public static int Crash;
     public static double time;
     public static LinkedList<Double> colisionTimes = new LinkedList<>();
+    public static LinkedList<Double> modules = new LinkedList<>();
 }

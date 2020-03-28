@@ -431,5 +431,13 @@ public class Board {
 	public void setMax_v_module(double max_v_module) {
 		this.max_v_module = max_v_module;
 	}
-    
+
+    public Double velocity() {
+        double vy=0,vx=0;
+        for(Particle particle : particles){
+            vx+=particle.getVelocity().x;
+            vy+=particle.getVelocity().y;
+        }
+        return Math.sqrt(Math.pow(vx,2)+Math.pow(vy,2));
+    }
 }
