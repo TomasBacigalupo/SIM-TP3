@@ -20,7 +20,9 @@ public class Board {
 	private double V;
 	private int lastCrachA =-1;
     private int lastCrachB =-1;
-
+    
+    private double max_v_module = 0;
+    
 	private List<Particle> particles;
 	private List<Particle[]> matches;
 	private Particle big_particle;
@@ -222,6 +224,19 @@ public class Board {
 		return particles.get(0).getPosition();
 	}
 	
+	public String get_modules() {
+		StringBuilder ret = new StringBuilder();
+		for(Particle p : particles) {
+			double v = p.getVelocity().module();
+			if(v > max_v_module) {
+				max_v_module = v;
+			}
+			ret.append(v);
+			ret.append("\n");
+		}
+		return ret.toString();
+	}
+	
 	public String printParticles() {
 		StringBuilder ret = new StringBuilder();
 		for(Particle p : particles) {
@@ -408,4 +423,13 @@ public class Board {
     public void setDown(double down) {
         this.down = down;
     }
+    
+    public double getMax_v_module() {
+		return max_v_module;
+	}
+
+	public void setMax_v_module(double max_v_module) {
+		this.max_v_module = max_v_module;
+	}
+    
 }
