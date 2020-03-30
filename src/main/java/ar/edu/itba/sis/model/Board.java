@@ -62,16 +62,18 @@ public class Board {
         this.big_particle = new Particle(0,new Vector(L/2,L/2),new Vector(0,0),R2,M2);
         particles.add(this.big_particle);
 
-        double x,y,vx,vy;
+        double x,y,v,vx,vy,alfa;
         for(int i = 1 ; i < N ; i++) {
             //Check it fits
             do {
         		x =  Math.random()*L;
         		y =  Math.random()*L;
             }while(overlaps(new Particle(0,new Vector(x,y),null,R1,0) , particles ) || !inside(new Particle(0,new Vector(x,y),null,R1,0)));
-
-            vx = rand.nextDouble()*V;
-            vy = rand.nextDouble()*V;
+            
+            v = rand.nextDouble()*V;
+            alfa = rand.nextDouble();
+            vx = v*Math.cos(alfa);
+            vy = v*Math.sin(alfa);
 
             particles.add(new Particle(i,new Vector(x,y),new Vector(vx,vy),R1,M1));
         }
@@ -87,7 +89,7 @@ public class Board {
 		return false;
 	}
 
-	public double temperature() {
+	public double temperature() { // average kinetic energy
 		double k = 0;
 		double module;
 		for(Particle particle : this.particles) {
