@@ -68,11 +68,12 @@ public class Main{
         Animation.boardModules.clear();
 
         double tc;
-        double time_elapsed = 0;
-        int steps = 0;
-
+        double clock = 1; // set the clock at one second n*t
+        double n = 0;
+        
         while(!board.end()){
             tc = board.tc();
+<<<<<<< HEAD
             time_elapsed += tc;
             Animation.modules.add(board.velocity());
             Animation.boardModules.add(board.getListModules());
@@ -83,19 +84,25 @@ public class Main{
             
             Animation.colisionTimes.add(tc);
             Animation.time+= tc;
+=======
+>>>>>>> b6f2e589408f30caa09982a089fcaf098a66f882
             board.update(tc);
             if(board.getLastCrachA()!= -1){
                 board.collision();
-
             }
-            simulacion.append(board.toOvito());
-            steps++;
+            Animation.time+= tc;
+            Animation.colisionTimes.add(tc);
+            if(Animation.time > clock*n) {
+            	//event ...
+            	Animation.modules.add(board.velocity());
+                simulacion.append(board.toOvito());
+            	n++;
+            }
         }
-
+        
         System.out.println(Animation.Crash);
         System.out.println(Animation.WallCrash);
         System.out.println(Animation.time);
-        System.out.println("steps*N="+board.getParticles().size()*steps);
 
         FileWriter fw = new FileWriter("ovito"+path+".txt");
         fw.write(simulacion.toString());
@@ -118,23 +125,22 @@ public class Main{
         }
         fw3.close();
         
-        FileWriter fw4 = new FileWriter("velocityModules"+path+".txt");
-        fw4.write(board.getMax_v_module()+"\n");
-        fw4.write(time_elapsed+"\n");
-        fw4.write(v_modules+"\n");
-        fw4.close();
-
-        FileWriter fw5 = new FileWriter("|v|"+path+".txt");
+        FileWriter fw4 = new FileWriter("|v|"+path+".txt");
         double times = 0;
         for (int i = 0; i <Animation.colisionTimes.size() ; i++) {
             times += Animation.colisionTimes.get(i);
+<<<<<<< HEAD
             if(times > tim*2/3){
                 for (Double m : Animation.boardModules.get(i)) {
                     fw5.write(m+"\n");
                 }
+=======
+            if(times > Animation.time*2/3){
+                fw4.write(Animation.modules.get(i)+ " "+ times+ "\n");
+>>>>>>> b6f2e589408f30caa09982a089fcaf098a66f882
             }
-
         }
+<<<<<<< HEAD
         fw5.close();
 
         FileWriter fw6 = new FileWriter("|vinicial|"+path+".txt");
@@ -143,6 +149,9 @@ public class Main{
             System.out.println(m);
         }
         fw6.close();
+=======
+        fw4.close();
+>>>>>>> b6f2e589408f30caa09982a089fcaf098a66f882
         
     }
 
