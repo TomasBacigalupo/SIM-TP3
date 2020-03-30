@@ -18,9 +18,28 @@ public class Vector {
 	}
 	@Override
 	public String toString() {
-		return String.format("(%.2f %.2f)",x,y);
+		return String.format("%.6f %.6f\n",x,y);
 	}
-	
+
+	public double getX() {
+		return x;
+	}
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
+
+	public double getCuadratic(Vector other){
+		return Math.pow(this.x-other.getX(),2)+Math.pow(this.y-other.getY(),2);
+	}
 }
 
 

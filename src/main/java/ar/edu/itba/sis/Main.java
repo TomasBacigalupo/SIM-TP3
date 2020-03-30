@@ -1,6 +1,9 @@
 package ar.edu.itba.sis;
 
 import ar.edu.itba.sis.model.Board;
+import ar.edu.itba.sis.model.Particle;
+import ar.edu.itba.sis.model.Position;
+import ar.edu.itba.sis.model.Vector;
 
 import java.io.*;
 import java.util.Properties;
@@ -40,10 +43,64 @@ public class Main{
         }
 
 
+        for (int i = 0; i <10; i++) {
+            Board board2 = new Board(N,L,Tmin*5,Tmax*5,R1,M1,R2,M2,V);
+
+            Animation.bpPositionEvents.clear();
+
+            BPSimulation(board2);
+
+            FileWriter fwn = new FileWriter("D"+i+".txt");
+            Vector start = new Vector(Animation.bpPositionEvents.get(Animation.bpPositionEvents.size()/2)[0],
+                    Animation.bpPositionEvents.get(Animation.bpPositionEvents.size()/2)[1]);
+            for (int j = Animation.bpPositionEvents.size()/2; j < Animation.bpPositionEvents.size(); j++) {
+                Vector v = new Vector(Animation.bpPositionEvents.get(j)[0],Animation.bpPositionEvents.get(j)[1]);
+                fwn.write(""+v.getCuadratic(start)+"\n");
+            }
+            fwn.close();
+
+        }
+
+
 
 
 
                 
+    }
+
+    public static void BPSimulation(Board board){
+        double tc;
+        double clock = 0.25; // set the clock at one second n*t
+        double n = 0;
+        Animation.bpPositionEvents.clear();
+        while(!board.end()){
+            tc = board.tc();
+
+            board.update(tc);
+
+            if(board.getLastCrachA()!= -1){
+                board.collision();
+            }
+
+            if(Animation.time > clock*n) {
+                //event ...
+
+                Double[] par = new Double[2];
+                par[0]= board.getParticles().get(0).getPosition().getX();
+                par[1]= board.getParticles().get(0).getPosition().getY();
+
+                Animation.bpPositionEvents.add(par);
+                n++;
+            }
+
+        }
+        Double[] par = new Double[2];
+        par[0]= board.getParticles().get(0).getPosition().getX();
+        par[1]= board.getParticles().get(0).getPosition().getY();
+
+        Animation.bpPositionEvents.add(par);
+
+
     }
 
     public static void completeSimulation(Board board,String path) throws IOException{
@@ -52,8 +109,7 @@ public class Main{
         StringBuilder v_modules = new StringBuilder();
         double t = board.temperature();
 
-        
-        board.setMax_v_module(0);
+
         
         v_modules.append("t=" + 0);
         v_modules.append("\n");
@@ -92,10 +148,6 @@ public class Main{
             	n++;
             }
         }
-        
-        System.out.println(Animation.Crash);
-        System.out.println(Animation.WallCrash);
-        System.out.println(Animation.time);
 
         FileWriter fw = new FileWriter("ovito"+path+".txt");
         fw.write(simulacion.toString());
@@ -140,11 +192,10 @@ public class Main{
         FileWriter fw5 = new FileWriter("|vinicial|"+path+".txt");
         for (Double m : Animation.boardModules.get(0)) {
             fw5.write(m+"\n");
-            System.out.println(m);
         }
         fw5.close();
-    }
 
+    }
 }
 
 
