@@ -4,6 +4,7 @@ package ar.edu.itba.sis.model;
 import ar.edu.itba.sis.Animation;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -439,5 +440,14 @@ public class Board {
             vy+=particle.getVelocity().y;
         }
         return Math.sqrt(Math.pow(vx,2)+Math.pow(vy,2));
+    }
+
+    public LinkedList<Double> getListModules() {
+        LinkedList<Double> res = new LinkedList<>();
+        for (Particle p:particles) {
+            res.add(Math.sqrt(Math.pow(p.getVelocity().x,2)+Math.pow(p.getVelocity().y,2)));
+
+        }
+        return res;
     }
 }

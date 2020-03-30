@@ -36,7 +36,7 @@ public class Main{
 
         Board board = new Board(N,L,Tmin,Tmax,R1,M1,R2,M2,V);
         for (int i = 1; i < 5; i++) {
-            completeSimulation(new Board(20*i,L,Tmin,Tmax,R1,M1,R2,M2,V),""+20*i);
+            completeSimulation(new Board(N,L,Tmin*i,Tmax*i,R1,M1,R2,M2,V),""+5*i);
         }
 
 
@@ -63,6 +63,8 @@ public class Main{
         Animation.time = 0;
         Animation.colisionTimes.clear();
         Animation.modules.clear();
+        Animation.boardModules.clear();
+
         double tc;
         double time_elapsed = 0;
         int steps = 0;
@@ -71,6 +73,7 @@ public class Main{
             tc = board.tc();
             time_elapsed += tc;
             Animation.modules.add(board.velocity());
+            Animation.boardModules.add(board.getListModules());
 
             v_modules.append("t=" + time_elapsed);
             v_modules.append("\n");
@@ -124,10 +127,20 @@ public class Main{
         for (int i = 0; i <Animation.colisionTimes.size() ; i++) {
             times += Animation.colisionTimes.get(i);
             if(times > tim*2/3){
-                fw5.write(Animation.modules.get(i)+ " "+ times+ "\n");
+                for (Double m : Animation.boardModules.get(i)) {
+                    fw5.write(m+"\n");
+                }
             }
 
         }
+        fw5.close();
+
+        FileWriter fw6 = new FileWriter("|vinicial|"+path+".txt");
+        for (Double m : Animation.boardModules.get(0)) {
+            fw6.write(m+"\n");
+            System.out.println(m);
+        }
+        fw6.close();
         
     }
 
