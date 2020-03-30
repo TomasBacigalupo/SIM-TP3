@@ -73,25 +73,18 @@ public class Main{
         
         while(!board.end()){
             tc = board.tc();
-<<<<<<< HEAD
-            time_elapsed += tc;
+
+
             Animation.modules.add(board.velocity());
             Animation.boardModules.add(board.getListModules());
-
-            v_modules.append("t=" + time_elapsed);
-            v_modules.append("\n");
-            v_modules.append(board.get_modules());
-            
             Animation.colisionTimes.add(tc);
             Animation.time+= tc;
-=======
->>>>>>> b6f2e589408f30caa09982a089fcaf098a66f882
             board.update(tc);
+
             if(board.getLastCrachA()!= -1){
                 board.collision();
             }
-            Animation.time+= tc;
-            Animation.colisionTimes.add(tc);
+
             if(Animation.time > clock*n) {
             	//event ...
             	Animation.modules.add(board.velocity());
@@ -129,30 +122,27 @@ public class Main{
         double times = 0;
         for (int i = 0; i <Animation.colisionTimes.size() ; i++) {
             times += Animation.colisionTimes.get(i);
-<<<<<<< HEAD
-            if(times > tim*2/3){
+
+            if(times > Animation.time*2/3) {
                 for (Double m : Animation.boardModules.get(i)) {
-                    fw5.write(m+"\n");
+                    fw4.write(m + "\n");
                 }
-=======
+            }
+
             if(times > Animation.time*2/3){
                 fw4.write(Animation.modules.get(i)+ " "+ times+ "\n");
->>>>>>> b6f2e589408f30caa09982a089fcaf098a66f882
+
             }
         }
-<<<<<<< HEAD
-        fw5.close();
 
-        FileWriter fw6 = new FileWriter("|vinicial|"+path+".txt");
+        fw4.close();
+
+        FileWriter fw5 = new FileWriter("|vinicial|"+path+".txt");
         for (Double m : Animation.boardModules.get(0)) {
-            fw6.write(m+"\n");
+            fw5.write(m+"\n");
             System.out.println(m);
         }
-        fw6.close();
-=======
-        fw4.close();
->>>>>>> b6f2e589408f30caa09982a089fcaf098a66f882
-        
+        fw5.close();
     }
 
 }
