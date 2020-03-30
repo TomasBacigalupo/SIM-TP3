@@ -36,7 +36,7 @@ public class Main{
 
         Board board = new Board(N,L,Tmin,Tmax,R1,M1,R2,M2,V);
         for (int i = 1; i < 5; i++) {
-            completeSimulation(new Board(N,L,Tmin*i,Tmax*i,R1,M1,R2,M2,V),""+5*i);
+            completeSimulation(new Board(N,L,Tmin*i,Tmax*i,R1,M1,R2,M2,V*i),""+5*i);
         }
 
 
@@ -50,6 +50,8 @@ public class Main{
         StringBuilder simulacion = new StringBuilder();
         
         StringBuilder v_modules = new StringBuilder();
+        double t = board.temperature();
+
         
         board.setMax_v_module(0);
         
