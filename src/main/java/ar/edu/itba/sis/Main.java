@@ -20,6 +20,7 @@ public class Main{
         double R2;
         double M2;
         double V;
+        double clock;
         
         //set variables from config.properties
         
@@ -36,29 +37,36 @@ public class Main{
         R2 = new Double(prop.getProperty("sim.R2"));
         M2 = new Double(prop.getProperty("sim.M2"));
         V = new Double(prop.getProperty("sim.V0MAX"));
+        clock = new Double(prop.getProperty("sim.Clock"));
 
         Board board = new Board(N,L,Tmin,Tmax,R1,M1,R2,M2,V);
         for (int i = 1; i < 5; i++) {
-            completeSimulation(new Board(N,L,Tmin*i,Tmax*i,R1,M1,R2,M2,V*i),""+5*i);
+            completeSimulation(new Board(N,L,Tmin*i,Tmax*i,R1,M1,R2,M2,V*i),""+5*i,clock);
         }
 
 
-        for (int i = 0; i <10; i++) {
-            Board board2 = new Board(N,L,Tmin*5,Tmax*5,R1,M1,R2,M2,V);
+//        for (int i = 0; i <10; i++) {
+//            Board board2 = new Board(N,L,Tmin*5,Tmax*5,R1,M1,R2,M2,V);
+//
+//            Animation.bpPositionEvents.clear();
+//
+//            BPSimulation(board2);
+//
+//            FileWriter fwn = new FileWriter("D"+i+".txt");
+//            //todo poner bien el start
+////            Vector start = new Vector(Animation.bpPositionEvents.get(Animation.bpPositionEvents.size()/2)[0],
+////                    Animation.bpPositionEvents.get(Animation.bpPositionEvents.size()/2)[1]);
+//            Vector start = new Vector(0.25,0.25);
+//            for (int j = Animation.bpPositionEvents.size()/2; j < Animation.bpPositionEvents.size(); j++) {
+//                Vector v = new Vector(Animation.bpPositionEvents.get(j)[0],Animation.bpPositionEvents.get(j)[1]);
+//                fwn.write(""+v.getCuadratic(start)+"\n");
+//            }
+//            fwn.close();
+//
+//        }
 
-            Animation.bpPositionEvents.clear();
-
-            BPSimulation(board2);
-
-            FileWriter fwn = new FileWriter("D"+i+".txt");
-            Vector start = new Vector(Animation.bpPositionEvents.get(Animation.bpPositionEvents.size()/2)[0],
-                    Animation.bpPositionEvents.get(Animation.bpPositionEvents.size()/2)[1]);
-            for (int j = Animation.bpPositionEvents.size()/2; j < Animation.bpPositionEvents.size(); j++) {
-                Vector v = new Vector(Animation.bpPositionEvents.get(j)[0],Animation.bpPositionEvents.get(j)[1]);
-                fwn.write(""+v.getCuadratic(start)+"\n");
-            }
-            fwn.close();
-
+        for (int i = 0; i < 10; i++) {
+            completeSimulation(new Board(N,L,Tmin,Tmax,R1,M1,R2,M2,V),"D"+i,10);
         }
 
 
@@ -73,6 +81,7 @@ public class Main{
         double clock = 0.25; // set the clock at one second n*t
         double n = 0;
         Animation.bpPositionEvents.clear();
+
         while(!board.end()){
             tc = board.tc();
 
@@ -103,7 +112,7 @@ public class Main{
 
     }
 
-    public static void completeSimulation(Board board,String path) throws IOException{
+    public static void completeSimulation(Board board,String path,double clock) throws IOException{
         StringBuilder simulacion = new StringBuilder();
         
         StringBuilder v_modules = new StringBuilder();
@@ -124,7 +133,6 @@ public class Main{
         Animation.boardModules.clear();
 
         double tc;
-        double clock = 1; // set the clock at one second n*t
         double n = 0;
         
         while(!board.end()){
@@ -189,7 +197,7 @@ public class Main{
 
         fw4.close();
 
-        FileWriter fw5 = new FileWriter("|vinicial|"+path+".txt");
+        FileWriter fw5 = new FileWriter("|v0|"+path+".txt");
         for (Double m : Animation.boardModules.get(0)) {
             fw5.write(m+"\n");
         }

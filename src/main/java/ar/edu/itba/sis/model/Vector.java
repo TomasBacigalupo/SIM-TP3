@@ -38,7 +38,7 @@ public class Vector {
 	}
 
 	public double getCuadratic(Vector other){
-		return Math.pow(this.x-other.getX(),2)+Math.pow(this.y-other.getY(),2);
+		return Math.pow(this.x-other.getX(),2) + Math.pow(this.y-other.getY(),2);
 	}
 }
 
