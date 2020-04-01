@@ -1,10 +1,6 @@
 package ar.edu.itba.sis;
 
 import ar.edu.itba.sis.model.Board;
-import ar.edu.itba.sis.model.Particle;
-import ar.edu.itba.sis.model.Position;
-import ar.edu.itba.sis.model.Vector;
-
 import java.io.*;
 import java.util.Properties;
 
@@ -76,41 +72,6 @@ public class Main{
                 
     }
 
-    public static void BPSimulation(Board board){
-        double tc;
-        double clock = 0.25; // set the clock at one second n*t
-        double n = 0;
-        Animation.bpPositionEvents.clear();
-
-        while(!board.end()){
-            tc = board.tc();
-
-            board.update(tc);
-
-            if(board.getLastCrachA()!= -1){
-                board.collision();
-            }
-
-            if(Animation.time > clock*n) {
-                //event ...
-
-                Double[] par = new Double[2];
-                par[0]= board.getParticles().get(0).getPosition().getX();
-                par[1]= board.getParticles().get(0).getPosition().getY();
-
-                Animation.bpPositionEvents.add(par);
-                n++;
-            }
-
-        }
-        Double[] par = new Double[2];
-        par[0]= board.getParticles().get(0).getPosition().getX();
-        par[1]= board.getParticles().get(0).getPosition().getY();
-
-        Animation.bpPositionEvents.add(par);
-
-
-    }
 
     public static void completeSimulation(Board board,String path,double clock) throws IOException{
         StringBuilder simulacion = new StringBuilder();
