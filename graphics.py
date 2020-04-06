@@ -14,10 +14,10 @@ from sklearn import linear_model
 from sklearn.metrics import mean_squared_error, r2_score
 
 #Global variables
-PATH_GENERAL = "/Users/Tomas/Desktop/SIM-TP3/"
-ANIMATION_PATH = "/Users/Tomas/Desktop/SIM-TP3/ovito"
-DATA_PATH = "/Users/Tomas/Desktop/SIM-TP3/dataTCACUM5.txt"
-DATA_PATH_TC = "/Users/Tomas/Desktop/SIM-TP3/dataTC5.txt"
+PATH_GENERAL = "/Users/TomsBacigalupo/Documents/sim/SIM-TP3/"
+ANIMATION_PATH = "/Users/TomsBacigalupo/Documents/sim/SIM-TP3/ovito"
+DATA_PATH = "/Users/TomsBacigalupo/Documents/sim/SIM-TP3/dataTCACUM5.txt"
+DATA_PATH_TC = "/Users/TomsBacigalupo/Documents/sim/SIM-TP3/dataTC5.txt"
 BIG_PARTICLE_ID = 0
 PXIndex =1
 PYIndex =2
@@ -96,6 +96,10 @@ def promediarLista(lista):
         sum=sum+lista[i]
  
     return sum/len(lista)
+
+
+def f1(x,c):
+    return x*c-0.0007
 
 x=[]
 y=[]
@@ -214,8 +218,27 @@ print('Coefficients: \n', regr.coef_)
 print('Variance score: %.2f' % r2_score(y_train, y_pred))
 plt.plot(x,x*regr.coef_+regr.intercept_)
 
-
 plt.figure(7)
+min = float('inf')
+c = -2.25732292e-05
+p = c
+dist = 0
+errors = []
+for i in range(1,10):
+    dist = 0
+    for j in range(0, len(y)-1):
+        dist+=  math.pow(y[j]-f1(x[j],p),2)
+    if dist < min:
+        min = dist
+        c = p
+    errors.append(dist)
+    p += 1e-05
+    print(p)
+
+plt.plot(errors)
+
+
+plt.figure(8)
 plt.title("10 simulaciones N=50 v = 0.1m/s. Particula chica id=1. Desplazamiento cuadratico medio\n")
 plt.xlabel("Tiempo en segundos")
 plt.ylabel("Desplazamiento cuadratico medio")
@@ -262,6 +285,26 @@ y_pred = regr.predict(x_train)
 print('Coefficients: \n', regr.coef_)
 print('Variance score: %.2f' % r2_score(y_train, y_pred))
 plt.plot(x,x*regr.coef_+regr.intercept_)
+
+
+plt.figure(9)
+min = float('inf')
+c = -0.0002
+p = c
+dist = 0
+errors = []
+for i in range(1,10):
+    dist = 0
+    for j in range(0, len(y)-1):
+        dist+=  math.pow(y[j]-f1(x[j],p),2)
+    if dist < min:
+        min = dist
+        c = p
+    errors.append(dist)
+    p += 0.0001
+    print(p)
+
+plt.plot(errors)
 
 plt.show()
 
