@@ -173,7 +173,7 @@ sns.distplot(module, hist=True, kde=False, norm_hist = True,
 plt.figure(6)
 plt.title("10 simulaciones N=50 v = 0.1m/s. Particula grande. Desplazamiento cuadratico medio\n")
 plt.xlabel("Tiempo en segundos")
-plt.ylabel("Desplazamiento cuadratico medio")
+plt.ylabel("Desplazamiento cuadratico medio [m2]")
 events = [[],[],[],[],[],[],[],[]]
 
 minmo = float('inf')
@@ -219,12 +219,16 @@ print('Variance score: %.2f' % r2_score(y_train, y_pred))
 plt.plot(x,x*regr.coef_+regr.intercept_)
 
 plt.figure(7)
+plt.xlabel("c (pendiente)")
+plt.ylabel("E(c) (error cuadratico)")
 min = float('inf')
 c = -2.25732292e-05
 p = c
 dist = 0
 errors = []
+xc=[]
 for i in range(1,10):
+    xc.append(p)
     dist = 0
     for j in range(0, len(y)-1):
         dist+=  math.pow(y[j]-f1(x[j],p),2)
@@ -235,13 +239,13 @@ for i in range(1,10):
     p += 1e-05
     print(p)
 
-plt.plot(errors)
+plt.plot(xc,errors)
 
 
 plt.figure(8)
 plt.title("10 simulaciones N=50 v = 0.1m/s. Particula chica id=1. Desplazamiento cuadratico medio\n")
 plt.xlabel("Tiempo en segundos")
-plt.ylabel("Desplazamiento cuadratico medio")
+plt.ylabel("Desplazamiento cuadratico medio [m2]")
 events = [[],[],[],[],[],[],[],[]]
 
 minmo = float('inf')
@@ -288,12 +292,16 @@ plt.plot(x,x*regr.coef_+regr.intercept_)
 
 
 plt.figure(9)
+plt.xlabel("c (pendiente)")
+plt.ylabel("E(c) (error cuadratico)")
 min = float('inf')
 c = -0.0002
 p = c
 dist = 0
 errors = []
+xc=[]
 for i in range(1,10):
+    xc.append(p)
     dist = 0
     for j in range(0, len(y)-1):
         dist+=  math.pow(y[j]-f1(x[j],p),2)
@@ -304,7 +312,8 @@ for i in range(1,10):
     p += 0.0001
     print(p)
 
-plt.plot(errors)
+
+plt.plot(xc,errors)
 
 plt.show()
 
