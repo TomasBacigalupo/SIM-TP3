@@ -14,10 +14,10 @@ from sklearn import linear_model
 from sklearn.metrics import mean_squared_error, r2_score
 
 #Global variables
-PATH_GENERAL = "/Users/TomsBacigalupo/Documents/sim/SIM-TP3/"
-ANIMATION_PATH = "/Users/TomsBacigalupo/Documents/sim/SIM-TP3/ovito"
-DATA_PATH = "/Users/TomsBacigalupo/Documents/sim/SIM-TP3/dataTCACUM5.txt"
-DATA_PATH_TC = "/Users/TomsBacigalupo/Documents/sim/SIM-TP3/dataTC5.txt"
+PATH_GENERAL = ""
+ANIMATION_PATH = "ovito"
+DATA_PATH = "dataTCACUM5.txt"
+DATA_PATH_TC = "dataTC5.txt"
 BIG_PARTICLE_ID = 0
 PXIndex =1
 PYIndex =2
